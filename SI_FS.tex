@@ -6,6 +6,7 @@
 \usepackage{csvsimple}
 
 
+
 \templatetype{pnassupportinginfo}
 % \readytosubmit %% Uncomment this line before submitting, so that the instruction page is removed.
 
@@ -34,7 +35,7 @@ Targeted species were queried through Walker's Bats of the World \cite{Nowak1994
 Bat species that had undergone taxonomic reassignment were queried under all names. Species that had been implicated, but did not reside in Africa, were queried on a genus level in attempt to identify representative sister species.
 Preliminary results suggested insufficient sample sizes to model parturition on a per-species basis. Subsequently, the database was expanded to all mainland African bat and species were aggregated into three taxonomic clusters: Pteropodidae, Molossidae, and non-Molossid microbats, according to \cite{Cumming1997RainfallBats}, to account for the sharing of life history traits, including those associated with reproductive strategies and dietary preferences.
 Publications returned from the queries were accessed by hand and when applicable, the location and month of parturition were extracted. Additional points for non-implicated species were added opportunistically as discovered and an African bat specialist (AM) was consulted to help fill holes in the dataset.
-A total of 63 articles provided information on 14 pteropid species, 7 molossid species, and 43 non-molossid microbats at *XX number of unique locations totalling 166 event records (Figure 2 in the main text). Of these XX\% were retained and ZZ records were discarded as outside of our study extent.
+A total of 63 articles provided information on 14 pteropid species, 7 molossid species, and 43 non-molossid microbats at 75 number of unique locations totalling 165 event records (Figure 2 in the main text). Of these 88\% were retained and 8 locations were discarded as outside of our study extent.
 Results are summarized in Supplemental Information Table ~\ref{table:DataMining}.\par
 
 \subsection*{Covariate data}
@@ -54,7 +55,7 @@ The number of overlapping distributions for each cell within the study area were
     
 \subsubsection*{Land cover}
 \label{Land cover}
-The global land cover database \cite{Olivier2012Global2009} was obtained for the year 2009 and custom aggregation was used to reduce the number of classes from 23 to five as described but Supplemental Information Table~\ref{SI:table:globReclass}.\par
+The global land cover database \cite{Olivier2012Global2009} was obtained for the year 2009 and custom aggregation was used to reduce the number of classes from 23 to five as described but Supplemental Information Table~\ref{table:globReclass}.\par
 
 \subsection*{Fragmentation index}
 A binary mask of the aggregated `forest' class (as described above) from the Globcover 2009 dataset \cite{Olivier2012Global2009} was used to define forest patches using 4-connectivity.
@@ -87,11 +88,11 @@ An ensemble model was then generated based on the weighted mean of the receiver 
 The resulting ensemble model was then projected back across the input data to produce a continuous probability surface of bat birthing for the study area. 
 Model scores are summarized in Supplemental Information Table.\par
 
-Ensemble mode results were combined with rasters describing the taxonomic beta diversity (as described above) to create a "Force of Birthing" metric $\lambda_{T,i,t}$ as described by:\newline
+Ensemble mode results were combined with rasters describing the taxonomic beta diversity (as described above) to create a "Force of Birthing" metric $\lambda_{T,i,t}$ as described by:
  \begin{equation}
- \begin{gathered}
- 	\lambda_{T,i,t} = log(P(Birth_{T,i,t})*\beta_{T,i} +1)
- \end{gathered}
+    \begin{gathered}
+ 	    \lambda_{T,i,t} = log(P(Birth_{T,i,t})*\beta_{T,i} +1)
+    \end{gathered}
  \end{equation}
 where for each taxonomic group $T$, at location $i$ and time $t$ number of taxonomic members is give by $\beta_{T,i}$, and the probability of birth occurrence is $P(Birth_{T,i,t})$.
 relative number of members giving birth at any location in time and space. The abbreviations $ptr$, $mic$ and $mol$ were used to represent Pteropodidae, Non-Molossid Microbats, and Molossidae respectively.  
@@ -119,12 +120,12 @@ The quadrature was based on a raster grid of the same structure as those used th
 
 \subsection{qAIC}
 \label{qAIC}
-Models with and without the force of birthing terms were compared using a quasi-Akaike information criteria (qAIC) scheme of the form: \\
+Models with and without the force of birthing terms were compared using a quasi-Akaike information criteria (qAIC) scheme of the form: 
 \begin{equation}
-\begin{gathered}
-qAIC = deviance X \hat{C} + 2k \\
-\hat{C} = \sum{weights * residuals^2}/df.residuals
-\end{gathered}
+    \begin{gathered}
+        qAIC = deviance X \hat{C} + 2k \\
+        \hat{C} = \sum{weights * residuals^2}/df.residuals
+    \end{gathered}
 \end{equation}
 Over dispersion was calculated by $\hat{C}$ and $k$ represents the number of terms.\\
 
@@ -226,6 +227,42 @@ Over dispersion was calculated by $\hat{C}$ and $k$ represents the number of ter
 \FloatBarrier
 
 %%%
+\begin{table}
+\centering
+\caption{Covariate layers for birth pulse modelling}
+\label{table:ENM_CoV}
+\begin{tabular}{l c r}
+\multicolumn{1}{c}{Description} & \multicolumn{1}{c}{Variable Type} & \multicolumn{1}{c}{References}\\
+\hline\hline
+Terrestrial mammalian biodiversity & Static & \cite{IUCN2016TerrestrialData}\\
+Land cover (modified) & Static & \cite{Olivier2012Global2009}\\
+Precipitation seasonality & Static & \cite{Frick2017WorldclimArease}\\
+Mean diurnal range & Static & \cite{Frick2017WorldclimArease}\\
+Temperature seasonality & Static & \cite{Frick2017WorldclimArease}\\
+Temperature annual range & Static& \cite{Frick2017WorldclimArease}\\
+Mean monthly temperature & Temporal & \cite{Frick2017WorldclimArease}\\
+Mean monthly precipitation & Temporal & \cite{Frick2017WorldclimArease}\\
+Potential evapo-transpiration & Temporal & \cite{Trabucco2009GlobalDatabase}\\
+Enhanced vegetative index & Temporal & \cite{Huete2002OverviewIndices}
+\end{tabular}
+\end{table}
+\FloatBarrier
+
+%%%
+\begin{table}[!h]
+\centering
+\caption{Reclassification of land cover variables}
+\label{table:globReclass}
+
+\csvreader[tabular = l l l,
+	table head = Value & Label & Class \\\hline\hline,
+    late after line = \\,
+    late after last line = \\\hline]%
+    {globReclassSimple.csv}{Value =\Value,Label =\Label,Class =\Class}%
+    	{\Value & \Label & \Class}%
+\end{table}
+
+%%%
 \newpage\clearpage
 \begin{table}[!h]
 \centering
@@ -239,7 +276,83 @@ Over dispersion was calculated by $\hat{C}$ and $k$ represents the number of ter
     {EMN_ModelResults.csv}{Model=\Model,ROC =\ROC,Sensitivity=\Sensitivity,Specificity=\Specificity}%
     {\Model & \ROC & \Sensitivity & \Specificity}%
 \end{table}
+\FloatBarrier
+%%%
+\newpage\clearpage
+\begin{figure}
+    \centering
+    \includegraphics[width=.8\linewidth]{ptrBF_SI.png}
+    \caption{Monthly force of birthing for African fruit bats}
+    \label{fig:ptrBF}
+\end{figure}
+\FloatBarrier
 
+\newpage\clearpage
+\begin{figure}
+    \centering
+    \includegraphics[width=.8\linewidth]{molBF_SI.png}
+    \caption{Monthly force of birthing for mollosid bats}
+    \label{fig:molBF}
+\end{figure}
+\FloatBarrier
+
+\newpage\clearpage
+\begin{figure}
+    \centering
+    \includegraphics[width=.8\linewidth]{micBF_SI.png}
+    \caption{Monthly force of birthing for non-mollosid microbats}
+    \label{fig:micBF}
+\end{figure}
+\FloatBarrier
+
+\newpage\clearpage
+\begin{figure}
+    \centering
+    \includegraphics[width=.8\linewidth]{AnnRisk.pdf}
+    \caption{Relative risk of ebolavirus spillover to non-human mammals}
+    \label{fig:AnRisk}
+\end{figure}
+
+%%%
+
+\begin{table}
+\centering
+\caption{Non-Human Spillover Full Model Results}
+\label{table:spatGLM_AN}
+\csvreader[tabular = l r r r  c,
+	table head = Coefficients & Estimate & Std. Error & t Value &  P Value \\\hline\hline,
+    late after line = \\,
+    late after last line = \\\hline]%
+    {AnFullResults.csv}{}%
+    {\csvcoli &  \csvcolii &  \csvcoliii &  \csvcoliv &  \csvcolv}
+\end{table}
+\FloatBarrier
+
+\begin{table}
+\centering
+\caption{Human Spillover Null  Model Results}
+\label{table:spatGLM_Hum_Null}
+\csvreader[tabular = l r r r  c,
+	table head = Coefficients & Estimate & Std. Error & t Value &  P Value \\\hline\hline,
+    late after line = \\,
+    late after last line = \\\hline]%
+    {HumNull.csv}{}%
+    {\csvcoli &  \csvcolii &  \csvcoliii &  \csvcoliv &  \csvcolv}
+\end{table}
+\FloatBarrier
+
+\begin{table}
+\centering
+\caption{Non-Human Spillover Null  Model Results}
+\label{table:spatGLM_AN_Null}
+\csvreader[tabular = l r r r  c,
+	table head = Coefficients & Estimate & Std. Error & t Value &  P Value \\\hline\hline,
+    late after line = \\,
+    late after last line = \\\hline]%
+    {AnNullResults.csv}{}%
+    {\csvcoli &  \csvcolii &  \csvcoliii &  \csvcoliv &  \csvcolv}
+\end{table}
+\FloatBarrier
 %%% Add this line AFTER all your figures and tables
 \FloatBarrier
 
