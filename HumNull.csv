@@ -1,0 +1,8 @@
+Coefficients,estimate,std.error,statistic,p.value
+Intercept,-29.821,6.026,-4.949,0
+$\beta_1 log(NBM div)$,-0.23,0.197,-1.168,0.243
+$\beta_2 RR_{an}$,5.288,1.382,3.827,0
+$\beta_3 RR_{an_{l-1}}$,1.914,1.866,1.026,0.305
+$\beta_4 log(NBM div)$,5.606,1.322,4.24,0
+$\beta_5 BVD$,-11.113,760.579,-0.015,0.988
+$\beta_6 fragIndex$,-0.215,0.348,-0.616,0.538
