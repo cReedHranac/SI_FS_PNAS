@@ -30,103 +30,85 @@
 
 \subsection*{Chiropteran parturition data mining}
 \label{dataMining}
-African bat species that have been previous implicated in filovirus transmission either through RNA or antibody detection methods (see S1 Han et al. 2016 \cite{Han2016UndiscoveredFiloviruses,Walsh2005Wave-likeZaire}) were defined as the primary target for the data mining.
-Targeted species were queried through Walker's Bats of the World \cite{Nowak1994WalkersWorld}, Scopus, Web of Science, and Google Scholar, using the generalized search terms: "Birth*"; "Breed*"; "Reproduc*"; "Partur*" along with the Latin binomial and common species names.
-Bat species that had undergone taxonomic reassignment were queried under all names. Species that had been implicated, but did not reside in Africa, were queried on a genus level in attempt to identify representative sister species.
-Preliminary results suggested insufficient sample sizes to model parturition on a per-species basis. Subsequently, the database was expanded to all mainland African bat and species were aggregated into three taxonomic clusters: Pteropodidae, Molossidae, and non-Molossid microbats, according to \cite{Cumming1997RainfallBats}, to account for the sharing of life history traits, including those associated with reproductive strategies and dietary preferences.
-Publications returned from the queries were accessed by hand and when applicable, the location and month of parturition were extracted. Additional points for non-implicated species were added opportunistically as discovered and an African bat specialist (AM) was consulted to help fill holes in the dataset.
-A total of 63 articles provided information on 14 pteropid species, 7 molossid species, and 43 non-molossid microbats at 75 number of unique locations totalling 165 event records (Figure 2 in the main text). Of these 88\% were retained and 8 locations were discarded as outside of our study extent.
-Results are summarized in Supplemental Information Table ~\ref{table:DataMining}.\par
-
-\subsection*{Covariate data}
+Bat species that have been implicated in \textit{Filovirus} transmission either through RNA or antibody detection methods (see S1 Han et al. 2016 \cite{Han2016UndiscoveredFiloviruses,Walsh2005Wave-likeZaire}) were systematically queried through Walker's Bats of the World \cite{Nowak1994WalkersWorld}, Scopus, Web of Science, and Google Scholar. Generalized search terms including: "Birth*"; "Breed*"; "Reproduc*"; "Partur*" along with the Latin binomial and common species names were used and bat species that had undergone taxonomic reassignment were queried under all names. Species that had been implicated, but did not reside in Africa, were queried at the genus level to identify representative sister species. Preliminary results suggested insufficient sample sizes to model parturition on a per-species basis and subsequently, the database was expanded to all mainland African bats. Species were then aggregated into three taxonomic clusters: African fruit bats (family: \textit{Pteropodidae}), molossid bats (family: \textit{Molossidae}, and non-molossid microbats, according to \cite{Cumming1997RainfallBats}, to account for shared life history traits including those associated with reproductive strategies and dietary preferences. Publications were accessed by hand and the location and month of parturition events were extracted. Additional points for non-implicated species were added opportunistically as discovered and an African bat specialist (AM) was consulted to help fill holes in the dataset. All gathered data was then compiled into a single, recirculating year for further analysis.\par
+\subsection*{Co-variate data}
 \label{CoV}
-	The spatial covariate data assembled to model and predict Chiropteran birthing and  EBOV spillover was blocked into two groups: static variables and temporally dynamic variables.
-Our intention with this project is to capture the seasonality and phenology likely driving these events so the primary focus of our covariates were metrics capturing seasonality and change in the environment.
-The static covariate layers were assumed to not vary between months of a year, be annually derived, or were not available for the different months of the year.
-The static variables comprised: mammalian species biodiversity (computed from the IUCN distributions; see subsection below) \cite{IUCN2016TerrestrialData}; global land cover aggregated into `grassland', `forest', `urban' and `undefined' classes\cite{Olivier2012Global2009}; and four of the 19 Bioclimatic variables representing 30 year average for precipitation seasonality, mean diurnal range, temperature seasonality, and temperature annual range \cite{Frick2017WorldclimArease}.
-Temporally dynamic covariates were all obtained at a monthly resolution and included layers describing mean monthly temperature, average monthly precipitation, potential evapo-transpiration \cite{Trabucco2009GlobalDatabase}; and an enhanced vegetative index \cite{Huete2002OverviewIndices}.
-The study extent of the project was restricted to only the parts of Africa receiving more than 500mL of precipitation annually as suggested by \cite{Schmidt2017SpatiotemporalSpillover}.
-All covariate layers were cropped and  masked to the precipitation layer, resolution was aggregated to ~25km raster blocks and temporally dynamic covariates were normalized (mean zero and standard deviation of 1). Extended Data Table ~\ref{table:ENM_CoV}
-
+Co-variate data assembled to for both the bat birthing models and EVD spillover models ~\ref{table:ENM_CoV}. Co-variate layers were blocked into static variables and temporally dynamic variables depending on the data availability and hypotheses being tested. The static co-variate layers used included those describing mammalian species biodiversity \cite{IUCN2016TerrestrialData}, land cover \cite{Olivier2012Global2009}, and four of the 19 Bioclimatic variables representing 30 year average for precipitation seasonality, mean diurnal range, temperature seasonality, and temperature annual range \cite{Frick2017WorldclimArease}. Temporally dynamic co-variate layers were used to describe mean monthly temperature, average monthly precipitation, potential evapo-transpiration \cite{Trabucco2009GlobalDatabase} and an enhanced vegetative index \cite{Huete2002OverviewIndices}.\par
+Considering the vast size of Africa the study extent was restricted to locations in Africa receiving more than 500mL of precipitation annually as suggested by Schmidt \textit{et al.} 2017\cite{Schmidt2017SpatiotemporalSpillover}. All co-variate layers were cropped and  masked to the precipitation layer, resolution was aggregated to ~25km raster blocks and temporally dynamic co-variates were normalized (mean zero and standard deviation of 1). All spatial handling was preformed within R \cite{Team2017R:Computing}, using tools within the \texttt{sp}, \texttt{raster}, and \texttt{rgdal} packages.\par
 \subsubsection*{Mammalian diversity layers}
-	layers were created to describe the number of species present at a location for a verity of criteria.
-To create mammalian diversity raster layers the IUCN red list terrestrial mammals distribution database \cite{IUCN2016TerrestrialData} was used. Layers were created to describe total terrestrial mammalian diversity, non-Chiropteran terrestrial mammals, Pteropodidae, Molossidae, and non-Molossid microbats, as defined above using the \texttt{taxize} package \cite{Chamberlain2013Taxize:R} for taxonomic classification and manually checked by hand (see \texttt{DiversityRasters.R}).
-The number of overlapping distributions for each cell within the study area were counted, and layers were cropped and masked to the study extent.
-    
+Co-variate layers describing non-volant mammalian, African fruit bat, molossid, and non-Molossid microbats diversity were created using the IUCN red list terrestrial mammals distribution database \cite{IUCN2016TerrestrialData}. Classification by taxonomic rank was performed by \texttt{taxize} package \cite{Chamberlain2013Taxize:R} and manually checked by hand (see \texttt{DiversityRasters.R}) and the number of overlapping distributions for each cell within the study area were counted.\par
 \subsubsection*{Land cover}
-\label{Land cover}
-The global land cover database \cite{Olivier2012Global2009} was obtained for the year 2009 and custom aggregation was used to reduce the number of classes from 23 to five as described but Supplemental Information Table~\ref{table:globReclass}.\par
-
-\subsection*{Fragmentation index}
-A binary mask of the aggregated `forest' class (as described above) from the Globcover 2009 dataset \cite{Olivier2012Global2009} was used to define forest patches using 4-connectivity.
-A fragmentation index was then calculated for each pixel by counting the number of unique patches, within a 20x20 sliding window. \par
-
-\subsection*{Human population}
-Population density data were taken from the Worldpop (http://www.worldpop.org.uk) 2010 distribution for continental Africa.
-
-
- %   The occurrence/absence data and dimensionally reduced covariates were then modeled through the biomod2 ensemble modeling framework creating a single Chiropteran community-weighted ensemble model based on the receiver operating characteristic (ROC) score (see ~\ref{biomod}). Each Chiropteran community ensemble model was then re-projected across the study extent and transformed\todo[inline, color=orange]{What is the transformation here??} such that each cell represents $P(Birth_{y_x}$), the probability of birth occurring at location $x$ in month $y$. To account for Chiropteran diversity, the equation was used, where $\beta$ is the diversity of each taxonomic cluster at location $x$.\todo[inline, color=orange]{It's not clear to me how $\lambda$ is being used. I'm guessing this is in the model later on? Or is this for the bat birth surfaces. If so, I think you can drop the log? i.e. you just want a measure of 'bat births' so you have probability of bat birth times the diversity (which in this case is number of species I think?) which is kinda like the expected number of bat species giving birth?}
-
-
-\subsection*{Biomod2 modeling}
+The global land cover database \cite{Olivier2012Global2009} was obtained for the year 2009 and custom aggregation was used to reduce the number of classes from 23 to five as described by Table~\ref{table:globReclass}.\par
+\subsubsection*{Fragmentation index}
+A binary mask of the aggregated `forest' class (as described above) from the Globcover 2009 dataset \cite{Olivier2012Global2009} was used to define forest patches using 4-connectivity. A fragmentation index was then calculated for each pixel by counting the number of unique patches within a 20x20 sliding window through tools in the \texttt{EBImage} package. \par
+\subsection*{Chiropteran birth pulse modeling}
 \label{biomod}
-
-To create continuous surfaces describing the presence or absence of bats giving birth for each of our taxonomic clusters we created a modified ecological niche modelling technique (ENM).
-EMN require occurrence (or occurrence/absence) and co-variate data to create regressive correlations between observed environmental phenomena and observed distribution of events (generally speaking a species occurrence, in this case the birthing of young).
-Data from the data mining was split by taxonomic grouping as described above and processed to create observation/absence data using a sliding two month window.
-Records of a birth within the window were denoted as an occurrence and all locations for which data was present, but no births were recorded for the taxonomic group were deemed true absence points. 
-The two month sliding window was chosen to reflect the non-discrete nature of birthing within wild animals as well accounting for data deficiencies.
-An additional ten, randomly generated, down-weighted points (five occurrence and five absence points) were added to all models in order to insure the representation of all land cover categories in all models, and provide necessary pseudo-absence points in a small number of cases in which and insufficient number of absence points existed.
-Covariate data was selected using Six month subsets of the temporally explicit covariates.
-Selections were centred on the observation window and included the two preceding, and following months.
-Due to the inherent correlation of the covariates (especially the temporally dynamic covariates) and general non-independence of all selected environmental covariates, a raster based PCA methods were used to reduce the dimensionality of all continuous predictors into six orthogonal principal components using the \texttt{rasterPCA} function of the package RSToobox.
+The birth pulses of Chiropteran taxonomic clusters were modeled though a modified ecological niche modeling (ENM) procedure devised for this analysis. Standard ENMs require occurrence (or occurrence/absence) and co-variate data to create regressive correlations between observed environmental phenomena and observations. In this instance, we re-purposed these models to correlate environmental signals with bat birthing events within a temporally dynamic framework.\par
+Birthing events identified through the data mining were split by taxonomic grouping as described above and observation/absence matrices were generated using a sliding two month window. Records of a birth within the window were recorded as an occurrence and all locations for which data was present, but no births were recorded for the taxonomic group were deemed "absence points". The two month sliding window was chosen to reflect the non-discrete nature of birthing within wild animals and to help account for deficiencies in the source. An additional ten, randomly generated, down-weighted points (five occurrence and five absence points) were added to all models to insure the representation of all land cover categories in all models, and provide necessary pseudo-absence points in a small number of cases in which and insufficient number of absence points existed.\par
+Co-variate data was selected using a wider six month sliding window to subset the temporally explicit co-variate layers. Selections were centred on the observation window and included the two preceding, and two following months. Due to the inherent correlation of the co-variate layers (especially the temporally dynamic co-variate layers) and general non-independence of all selected environmental metrics, a raster based PCA method was used to reduce the dimensionality of all continuous predictors into six orthogonal principal components using the \texttt{rasterPCA} function of the package RSToobox.
 The categorical land cover variable was then added to the other dimensionally reduced co-variates and occurrence/absence data were fed into the \texttt{biomod2} framework.\par
-
-Procedurally generated ENMs were generated for all taxonomic clusters for all pairs of consecutive months where the number of combined observations was greater than 7.
-Ten iterations of the potential eight preliminary models (generalized linear model, generalized boosted model, classification tree analysis, artificial neural network, surface range envelope, flexible discriminate analysis, random forest and maximum entropy) were computed using a standard 70:30 training:test ratio.
-An ensemble model was then generated based on the weighted mean of the receiver operating characteristic (ROC score).
-The resulting ensemble model was then projected back across the input data to produce a continuous probability surface of bat birthing for the study area. 
-Model scores are summarized in Supplemental Information Table.\par
-
-Ensemble mode results were combined with rasters describing the taxonomic beta diversity (as described above) to create a "Force of Birthing" metric $\lambda_{T,i,t}$ as described by:
- \begin{equation}
-    \begin{gathered}
- 	    \lambda_{T,i,t} = log(P(Birth_{T,i,t})*\beta_{T,i} +1)
-    \end{gathered}
- \end{equation}
-where for each taxonomic group $T$, at location $i$ and time $t$ number of taxonomic members is give by $\beta_{T,i}$, and the probability of birth occurrence is $P(Birth_{T,i,t})$.
-relative number of members giving birth at any location in time and space. The abbreviations $ptr$, $mic$ and $mol$ were used to represent Pteropodidae, Non-Molossid Microbats, and Molossidae respectively.  
-
-\subsection*{Modeling of outbreak events}
+EMNS were then procedurally generated for all taxonomic clusters for all pairs of consecutive months where the number of combined observations was greater than 7. Ten iterations of the potential eight preliminary models (generalized linear model, generalized boosted model, classification tree analysis, artificial neural network, surface range envelope, flexible discriminate analysis, random forest and maximum entropy) were computed using a standard 70:30 training:test ratio. Ensemble models were then compiled based on the weighted mean of the receiver operating characteristic (ROC score) to create a single consensus layer with the probability of event occurrence between 0 and 1.\par
+\subsubsection*{Force of birthing}
+Ensemble mode results were combined with taxonomic beta diversity (as described above) to create a "Force of Birthing" (FoB) metric $\lambda_{T,i,t}$ as described by:
+\[
+  	    \lambda_{T,i,t} = log(P(Birth_{T,i,t})*\beta_{T,i} +1)
+\]
+where for each taxonomic group $T$, at location $i$ and time $t$ number of taxonomic members is give by $\beta_{T,i}$, and the probability of birth occurrence is $P(Birth_{T,i,t})$ to represent the relative number of members of each taxon giving birth at any location in time and space. The abbreviations $afr$, $mic$ and $mol$ were used to represent African fruit bats, Non-Molossid Microbats, and Molossidae respectively. \par 
+\subsection*{Modeling of EVD outbreak events}
 \label{spatGLM}
-We fit a spatially weighted, overdispersed poisson general linear model (GLM) where log case rate is modelled as:
-\begin{equation}
-\begin{gathered}
-\log(RR_{hum, l, i, t}) \sim \beta_1 \lambda_{ptr, l, i, t} + \beta_2 \lambda_{mic, l, i, t} + \beta_3 \lambda_{mol, i, t} \\
-+ \beta_4 \lambda_{ptr, l-2, i, t} + \beta_5 \lambda_{mic, l-2, i, t} + \beta_6 \lambda_{mol, l-2 i, t} \\
-+ \beta_7 \lambda_{ptr, l-4 i, t} + \beta_8 \lambda_{mic, l-4, i, t} + \beta_9 \lambda_{mol, l-4 i, t} \\
-+ \beta_{10} \lambda_{ptr, l-6, i, t} + \beta_{11} \lambda_{mic, l-6, i, t} + \beta_{12} \lambda_{mol, l-6 i, t} \\
-+ \beta_{13} RR_{an, l, i, t}* + \beta_{14} RR_{an, l-1, i, t}*  \\
-+ \beta_{15} PopDen_{i}* + \beta_{16} NBM div_{i}* \\
-+ \beta_{17} fragIndex_{i}* 
-\end{gathered}
-\end{equation}
-where $RR_{hum}$ represents the relative risk of spillover events in humans, $\lambda_{T, l, i, t}$ is the force of birthing lagged by $l$ months.
-The spillover into potential non-reservoir hosts at any pixel, time and lag is $RR_{an, l , i, t}$. Human population density, non-Chiropteran mammalian diversity, and a forest fragmentation were also included as the terms: $PopDen_{i}*$; $NBM div_{i}*$; and $fragIndex_{i}*$.
-These three terms included no temporal aspects and were all transformed by $log +1$ denoted by $*$. \par 
-
-	Spatial weights were used to account for spatial autocorrelation of cases and generated through the use of a \texttt{spatstat} quadrature scheme.
-The quadrature was based on a raster grid of the same structure as those used throughout the the analysis. Relative risk values predicted back across sample space and reprojected.
+To test our hypothesis that the annual birthing cycles of African bats influences the spillover of EVD we fit a spatially weighted, overdispersed poisson general linear model (spatGLM). Spatial weights were used to account for spatial autocorrelation of cases and generated through the use of a \texttt{spatstat} quadrature scheme based on a raster grid of the same structure as those used to crop and mask the environmental co-variate layers. Forest dwelling animals susceptible to EVD presumably have different habitat use and contact patterns with the potential reservoir host(s) than humans and therefore spillover into non-human mammals were modeled independently of humans. Current hypotheses of filovirus spillover risk posit that synchronous shifts in population demographic may be responsible for periods of increased viral shedding \cite{Hayman2015BiannualPopulations, Pourrut2009LargeAegyptiacus.}. To include these, temporal lag terms of the FoB were included to test the period at which this may occur relative to the birth pulses. Relative risk of EVD spillover into non-reservoir animals was defined as:
+\[
+\begin{split}
+    \log(RR& _{an, i, t}) \sim \\
+    & \beta_1 \lambda_{afb, l, i, t} + \beta_2 \lambda_{mic, l, i, t} + \beta_3 \lambda_{mol, i, t} \\
+ + &\beta_4 \lambda_{afb, l-2, i, t} + \beta_5 \lambda_{mic, l-2, i, t} + \beta_6 \lambda_{mol, l-2 i, t} \\
+ + &\beta_7 \lambda_{afb, l-4 i, t} + \beta_8 \lambda_{mic, l-4, i, t} + \beta_9 \lambda_{mol, l-4 i, t} \\
+ + &\beta_{10} \lambda_{afb, l-6, i, t} + \beta_{11} \lambda_{mic, l-6, i, t} + \beta_{12} \lambda_{mol, l-6 i, t} \\
+ +&\beta_{13} BVD_{i,t} + \beta_{14} PopDen_{i}*  \\
+ + &\beta_{15} NBM div_{i}* + \beta_{16} fragIndex_{i}* 
+\end{split}
+\]
+where $RR_{an}$ represents the relative risk of EVD spillover at spatial location $i$, and month $t$. The FoB for each taxonomic cluster were included as $\lambda_{T, l, i, t}$, with a temporal lag of $l$ months and $afb$, $mic$, and $mol$ represent African fruit bats, non-molossid microbats and molossid bats respectively. Detections of ebolavirus within wild bats on the landscape were included by the term $BVD_{i,t}$. Non-Chiropteran mammalian diversity, and a forest fragmentation were also included as the terms: $NBM div_{i}*$; and $fragIndex_{i}*$, included no temporal dimensions and were transformed by $log +1$ denoted by $*$.\par
+Human outbreak events are not exclusively linked to proposed reservoir host exposure \cite{Pourrut2005TheAfrica} and outbreaks within non-humans were included within the human spillover model to include these epidemic chains. The relative risk of EVD spillover into humans ($RR_{hum}$) was described by:
+\[
+    \begin{split}
+\log(RR&_{hum, l, i, t}) \sim \\
+&\beta_1 \lambda_{afb, l, i, t} + \beta_2 \lambda_{mic, l, i, t} + \beta_3 \lambda_{mol, i, t} \\
+ + &\beta_4 \lambda_{afb, l-2, i, t} + \beta_5 \lambda_{mic, l-2, i, t} + \beta_6 \lambda_{mol, l-2 i, t} \\
+ + &\beta_7 \lambda_{afb, l-4 i, t} + \beta_8 \lambda_{mic, l-4, i, t} + \beta_9 \lambda_{mol, l-4 i, t} \\
+ + &\beta_{10} \lambda_{afb, l-6, i, t} + \beta_{11} \lambda_{mic, l-6, i, t} + \beta_{12} \lambda_{mol, l-6 i, t} \\
+ + &\beta_{13} RR_{an, l, i, t}* + \beta_{14} RR_{an, l-1, i, t}*  \\
+ +&\beta_{15} BVD + \beta_{16} PopDen_{i}*  \\
+ + &\beta_{17} NBM div_{i}* + \beta_{18} fragIndex_{i}*  
+    \end{split}
+\]
+Human population density,$PopDen_{i}*$ was included to represent the human-wildlife interface \cite{Plowright2015EcologicalSpillover.}. An additional non-reservoir host term was included describe the stuttering epidemic chain from these animals while still taking into account the rapid progression of EVD to mortality \cite{Swanepoel1996ExperimentalVirus}. \par
+Null models were computed to test the contribution of bat associated terms to over all model fit and were of the form:
+\[
+\begin{split}
+   \log(RR&_{hum, l, i, t}) \sim \\ 
+   &\beta_{1} RR_{an, l, i, t}* + \beta_{24} RR_{an, l-1, i, t}*  \\
+ +&\beta_{3} BVD + \beta_{4} PopDen_{i}*  \\
+ + &\beta_{5} fragIndex_{i}*
+\end{split}
+\]
+and 
+\[
+\begin{split}
+   \log(RR& _{an, i, t}) \sim \\
+   & \beta_1 log(NBM div) + \beta_2 fragIndex
+\end{split}
+\]
 
 \subsection{qAIC}
 \label{qAIC}
-Models with and without the force of birthing terms were compared using a quasi-Akaike information criteria (qAIC) scheme of the form: 
-\begin{equation}
-    \begin{gathered}
-        qAIC = deviance X \hat{C} + 2k \\
-        \hat{C} = \sum{weights * residuals^2}/df.residuals
-    \end{gathered}
-\end{equation}
+Models with and without bat associated terms were compared using a quasi-Akaike information criteria (qAIC) scheme of the form: 
+\[
+    \begin{split}
+        &qAIC = deviance X \hat{C} + 2k \\
+        &\hat{C} = \sum{weights * residuals^2}/df.residuals
+    \end{split}
+\]
 Over dispersion was calculated by $\hat{C}$ and $k$ represents the number of terms.\\
 
 
@@ -229,21 +211,23 @@ Over dispersion was calculated by $\hat{C}$ and $k$ represents the number of ter
 %%%
 \begin{table}
 \centering
-\caption{Covariate layers for birth pulse modelling}
+\caption{Covariate layers for modelling}
 \label{table:ENM_CoV}
-\begin{tabular}{l c r}
-\multicolumn{1}{c}{Description} & \multicolumn{1}{c}{Variable Type} & \multicolumn{1}{c}{References}\\
+\begin{tabular}{l c c r}
+\multicolumn{1}{c}{Description} & \multicolumn{1}{c}{Analysis} & \multicolumn{1}{c}{Variable Type} & \multicolumn{1}{c}{References}\\
 \hline\hline
-Terrestrial mammalian biodiversity & Static & \cite{IUCN2016TerrestrialData}\\
-Land cover (modified) & Static & \cite{Olivier2012Global2009}\\
-Precipitation seasonality & Static & \cite{Frick2017WorldclimArease}\\
-Mean diurnal range & Static & \cite{Frick2017WorldclimArease}\\
-Temperature seasonality & Static & \cite{Frick2017WorldclimArease}\\
-Temperature annual range & Static& \cite{Frick2017WorldclimArease}\\
-Mean monthly temperature & Temporal & \cite{Frick2017WorldclimArease}\\
-Mean monthly precipitation & Temporal & \cite{Frick2017WorldclimArease}\\
-Potential evapo-transpiration & Temporal & \cite{Trabucco2009GlobalDatabase}\\
-Enhanced vegetative index & Temporal & \cite{Huete2002OverviewIndices}
+Terrestrial mammalian biodiversity & Both & Static & \cite{IUCN2016TerrestrialData}\\
+Land cover (modified) & Both & Static & \cite{Olivier2012Global2009}\\
+Precipitation seasonality & ENM & Static & \cite{Frick2017WorldclimArease}\\
+Mean diurnal range & ENM & Static & \cite{Frick2017WorldclimArease}\\
+Temperature seasonality & ENM & Static & \cite{Frick2017WorldclimArease}\\
+Temperature annual range & ENM & Static& \cite{Frick2017WorldclimArease}\\
+Mean monthly temperature & ENM & Temporal & \cite{Frick2017WorldclimArease}\\
+Mean monthly precipitation & ENM & Temporal & \cite{Frick2017WorldclimArease}\\
+Potential evapo-transpiration & ENM & Temporal & \cite{Trabucco2009GlobalDatabase}\\
+Enhanced vegetative index & ENM & Temporal & \cite{Huete2002OverviewIndices}\\
+Vegetation fragmentation index & spatGLM & Static & This study \\
+Human population density & spatGLM & Static & *Cite CIESIN\\
 \end{tabular}
 \end{table}
 \FloatBarrier
