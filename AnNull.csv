@@ -1,4 +1,4 @@
 Coefficients,estimate,2.5,97.5,p.value
 Intercept,-33.94,-44.9,-22.99,<0.01
-$\beta_1 \log1{NBM div}$,5.91,3.56,8.26,<0.01
-$\beta \log1{fragIndex}$,0.57,-0.22,1.35,0.16
+$\beta_1 \logplus(NBM div)$,5.91,3.56,8.26,<0.01
+$\beta \logplus(fragIndex)$,0.57,-0.22,1.35,0.16
