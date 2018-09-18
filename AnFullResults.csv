@@ -1,4 +1,4 @@
-Coefficients,estimate,2.5\%,97.5\%,p.value
+Coefficients,estimate,2.5,97.5,p.value
 Intercept,-43.63,-55.38,-31.88,<0.01
 $\beta_1 \lambda_{afb}$,0.74,0.2,1.28,0.01
 $\beta_2 \lambda_{mic}$,0.1,-0.06,0.26,0.23

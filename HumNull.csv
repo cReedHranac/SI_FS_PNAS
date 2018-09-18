@@ -1,4 +1,4 @@
-Coefficients,estimate,2.5\%,97.5\%,p.value
+Coefficients,estimate,2.5,97.5,p.value
 Intercept,-29.81,-41.62,-18.01,<0.01
 $\beta_1 RR_{an}$,5.22,2.52,7.92,<0.01
 $\beta_2 RR_{an_{t-1}}$,1.98,-1.67,5.63,0.29
