@@ -92,7 +92,7 @@ Human population density, $\mathsf{PopDen}_{i}$ was included to represent the hu
 Null models were computed to test the contribution of bat associated terms to over all model fit and were of the form:
 \[
 \begin{split}
-   \log(RR&_{\mathsf{hum}, i, t}) \sim \\ 
+   \log(R&_{\mathsf{hum}, i, t}) \sim \\ 
    &\beta_{1} OB_{\mathsf{an}, i, t} + \beta_{24} OB_{\mathsf{an}, i, t-1}  \\
  +&\beta_{3} \logplus(\mathsf{NBM div}_{i}) + \beta_{4} \logplus(\mathsf{PopDen}_{i})  \\
  + &\beta_{5} \logplus(\mathsf{fragIndex}_{i})
@@ -101,8 +101,8 @@ Null models were computed to test the contribution of bat associated terms to ov
 and 
 \[
 \begin{split}
-   \log(RR& _{\mathsf{an}, i, t}) \sim \\
-   & \beta_1 \mathsf{NBM div_i} + \beta_2 \logplus(\mathsf{fragIndex}_{i})
+   \log(R& _{\mathsf{an}, i, t}) \sim \\
+   & \beta_1 \logplus(\mathsf{NBM div_i}) + \beta_2 \logplus(\mathsf{fragIndex}_{i})
 \end{split}
 \]
 
@@ -372,7 +372,7 @@ $RR_\mathsf{an} Full$ & 16 & 0.81 & 423.91 &  -93.54 \\
 	table head = Coefficients & Estimate & 2.5\% & 97.5\% &  P Value \\\hline\hline,
     late after line = \\,
     late after last line = \\\hline]%
-    {AnNullResults.csv}{}%
+    {AnNull.csv}{}%
     {\csvcoli &  \csvcolii &  \csvcoliii &  \csvcoliv &  \csvcolv}
 \end{table}
 \FloatBarrier
