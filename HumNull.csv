@@ -1,7 +1,7 @@
-Coefficients,estimate,std.error,statistic,p.value
-Intercept,-29.811,6.023,-4.95,<0.001
-$\beta_1 RR_{an}$,5.219,1.379,3.786,<0.001
-$\beta_2 RR_{an_{l-1}}$,1.982,1.861,1.065,0.287
-$\beta_3 NBM div*$,5.604,1.322,4.24,<0.001
-$\beta_4 PopDen*$,-0.229,0.197,-1.167,0.243
-$\beta_5 fragIndex*$,-0.214,0.348,-0.615,0.539
+Coefficients,estimate,2.5\%,97.5\%,p.value
+Intercept,-29.81,-41.62,-18.01,<0.01
+$\beta_1 RR_{an}$,5.22,2.52,7.92,<0.01
+$\beta_2 RR_{an_{t-1}}$,1.98,-1.67,5.63,0.29
+$\beta_3 log1{NBM div}$,5.6,3.01,8.19,<0.01
+$\beta_4 \log1{PopDen}$,-0.23,-0.61,0.16,0.24
+$\beta_5 \log1{fragIndex}$,-0.21,-0.9,0.47,0.54
